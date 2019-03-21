@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import '../App.css'
-import { fetchTask, completeTask, deleteTask } from '../action/todoListAction'
+import './index.css'
+import { fetchTask, completeTask, deleteTask } from '../../action/todoListAction'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 class ListItem extends Component {
@@ -16,7 +16,7 @@ class ListItem extends Component {
   }
   render() {
     return (
-      <ul>
+      <ul className="itemList">
         {
           this.props.list.map(element => {
             return (

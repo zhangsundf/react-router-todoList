@@ -1,0 +1,16 @@
+.LinkHeader {
+  position: relative;
+  top: 30px;
+  width: 300px;
+  display: flex;
+  margin: 0 auto;
+  border: none;
+  border-radius: 0;
+  border-bottom: 3px solid #e49866;
+}
+.LinkHeader li {
+  list-style-type: none;
+  margin-right: 25px;
+  margin-bottom: 10px;
+  color: #7ba866;
+}
