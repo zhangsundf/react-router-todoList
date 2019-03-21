@@ -8,16 +8,14 @@ const initialState = {
       name: 'weight less than 100', status: false
     }, {
       name: 'have 100,000 deposit', status: false
-    }],
-  inputVal: ''
+    }]
 }
 export default (state = initialState, action) => {
   switch(action.type) {
     case type.ADD_TASK:
-      return [
-        ...state,
-        action.payload
-      ]
+      const hasSameName = state.list.filter((item) => item.name === action.payload.trim())
+      if (!action.payload.trim().length || hasSameName.length) return state
+      return Object.assign({}, state, {list: [...state.list, {name: action.payload.trim(), status: false}]})
     case type.COMPLETE_TASK:
       const completeList = state.list.map((todo) => {
         if(todo.name === action.payload) {
@@ -25,12 +23,18 @@ export default (state = initialState, action) => {
         }
         return todo
       })
-      return Object.assign({}, state, {list: completeList})
+      return {
+        ...state,
+        list: completeList
+      }
     case type.DELETE_TASK:
       const deleteList = state.list.filter((todo) => {
         return todo.name !== action.payload
       })
-      return Object.assign({}, state, {list: deleteList})
+      return {
+        ...state,
+        list: deleteList
+      }
     case type.FETCH_TASK:
       return state
     default:

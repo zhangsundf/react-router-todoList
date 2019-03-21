@@ -1,43 +1,37 @@
-import React, { Component } from 'react'
-import './App.css'
-import { fetchTask, completeTask, deleteTask } from './action/todoListAction'
+import React, { Component } from 'react';
+import './index.css';
+import ListItem from './components/ListItem';
 import { connect } from 'react-redux'
+import { changeInput, clearInput } from './action/inputAction'
+import { addTask } from './action/todoListAction'
 import PropTypes from 'prop-types'
-class ListItem extends Component {
-
-  componentDidMount() {
-    this.props.fetchTask()
+class TodoList extends Component {
+  handleChange(e) {
+    this.props.changeInput(e.target.value)
   }
-  completeTask(name) {
-    this.props.completeTask(name)
-  }
-  deleteTask(name) {
-    this.props.deleteTask(name)
+  addTask() {
+    this.props.addTask(this.props.inputVal)
+    this.props.clearInput()
   }
   render() {
     return (
-      <ul>
-        {
-          this.props.list.map(element => {
-            return (
-              <li className="listItem" key={element.name}>
-                <input type="checkbox"
-                  checked={element.status}
-                  onChange={this.completeTask.bind(this, element.name)}/>
-                <span style={{textDecorationLine: !element.status ? 'none' : 'line-through'}}>{element.name}</span>
-                <button className="delete" onClick={this.deleteTask.bind(this, element.name)}>删除</button>
-              </li>)
-        })
-      }
-      </ul>
+        <div className="reactTodoList">
+        <header className="header">React todo list</header>
+        <ListItem/>
+        <footer>
+          <input type="text" placeholder="添加todo"
+            value={this.props.inputVal}
+            onChange={this.handleChange.bind(this)}></input>
+          <button className="addTodo" onClick={this.addTask.bind(this)}>添加</button>
+        </footer>
+      </div>
     )
   }
 }
-ListItem.propTypes = {
-  list: PropTypes.array.isRequired
+TodoList.propTypes = {
+  inputVal: PropTypes.string.isRequired
 }
-const mapStateToProps = (state) => ({
-  list: state.todoListReducer.list
+const mapToStateProps = (state) =>({
+  inputVal: state.inputReducer.inputVal
 })
-
-export default connect(mapStateToProps, {fetchTask, completeTask, deleteTask})(ListItem)
+export default connect(mapToStateProps, { changeInput, addTask, clearInput })(TodoList)
