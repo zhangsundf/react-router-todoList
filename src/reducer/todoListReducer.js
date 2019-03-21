@@ -19,17 +19,18 @@ export default (state = initialState, action) => {
         action.payload
       ]
     case type.COMPLETE_TASK:
-      const list = state.list.map((todo) => {
+      const completeList = state.list.map((todo) => {
         if(todo.name === action.payload) {
           return Object.assign({}, todo, {status: !todo.status})
         }
         return todo
       })
-      return Object.assign({}, state, {list: list})
+      return Object.assign({}, state, {list: completeList})
     case type.DELETE_TASK:
-      return state.list.filter((todo) => {
+      const deleteList = state.list.filter((todo) => {
         return todo.name !== action.payload
       })
+      return Object.assign({}, state, {list: deleteList})
     case type.FETCH_TASK:
       return state
     default:

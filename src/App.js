@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './App.css'
-import { fetchTask, completeTask } from './action/todoListAction'
+import { fetchTask, completeTask, deleteTask } from './action/todoListAction'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 class ListItem extends Component {
@@ -10,6 +10,9 @@ class ListItem extends Component {
   }
   completeTask(name) {
     this.props.completeTask(name)
+  }
+  deleteTask(name) {
+    this.props.deleteTask(name)
   }
   render() {
     return (
@@ -22,7 +25,7 @@ class ListItem extends Component {
                   checked={element.status}
                   onChange={this.completeTask.bind(this, element.name)}/>
                 <span style={{textDecorationLine: !element.status ? 'none' : 'line-through'}}>{element.name}</span>
-                <button className="delete">删除</button>
+                <button className="delete" onClick={this.deleteTask.bind(this, element.name)}>删除</button>
               </li>)
         })
       }
@@ -37,4 +40,4 @@ const mapStateToProps = (state) => ({
   list: state.todoListReducer.list
 })
 
-export default connect(mapStateToProps, {fetchTask, completeTask})(ListItem)
+export default connect(mapStateToProps, {fetchTask, completeTask, deleteTask})(ListItem)
