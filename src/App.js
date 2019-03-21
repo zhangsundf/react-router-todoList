@@ -6,7 +6,6 @@ import PropTypes from 'prop-types'
 class ListItem extends Component {
 
   componentDidMount() {
-    window.console.info('did')
     this.props.fetchTask()
   }
   completeTask(name) {

@@ -25,8 +25,7 @@ export default (state = initialState, action) => {
         }
         return todo
       })
-      window.console.info(list)
-      return state
+      return Object.assign({}, state, {list: list})
     case type.DELETE_TASK:
       return state.list.filter((todo) => {
         return todo.name !== action.payload
